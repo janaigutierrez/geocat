@@ -1,0 +1,19 @@
+{
+  "name": "geocat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janaigutierrez/geocat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janaigutierrez/geocat/issues"
+  },
+  "homepage": "https://github.com/janaigutierrez/geocat#readme",
+  "description": ""
+}
