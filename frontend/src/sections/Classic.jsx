@@ -1,7 +1,20 @@
+import { useState } from "react"
+import Button from "../components/common/Button"
+
 const Classic = () => {
+    const [showGame, setShowGame] = useState(false)
+
     return (
         <div>
-            <h2>Mode Clàssic</h2>
+            <Button onClick={() => setShowGame(!showGame)}>
+                Clàssic
+            </Button>
+
+            {showGame && (
+                <div>
+                    <p>Aquí anirà el joc</p>
+                </div>
+            )}
         </div>
     )
 }
