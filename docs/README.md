@@ -2,7 +2,7 @@
 
 **El joc diari de geografia catalana**
 
-Un Wordle geogràfic on cada dia has d'endevinar un municipi de Catalunya a través de diferents pistes i mini-jocs.
+Un Wordle geogràfic on cada dia has d'endevinar un municipi de Catalunya a través de 5 mini-jocs diferents.
 
 [![Demo](https://img.shields.io/badge/Demo-Live-brightgreen)](https://geocat.vercel.app)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue)](https://github.com/username/geocat)
@@ -10,58 +10,76 @@ Un Wordle geogràfic on cada dia has d'endevinar un municipi de Catalunya a trav
 
 ## 🎯 Què és GeoCat?
 
-GeoCat és un joc educatiu que combina geografia, cultura i història catalana en format diari. Cada 24 hores apareix un nou municipi per endevinar a través de múltiples mini-jocs:
+GeoCat és un joc educatiu que combina geografia, cultura i història catalana en format diari. Cada 24 hores apareix un nou municipi per endevinar a través de 5 mini-jocs complementaris:
 
-- **🏛️ Mode Clàssic**: Taula comparativa estil Wordle
-- **🗺️ Mode Silueta**: Endevina per la forma geogràfica
-- **🔍 Mode Zoom**: Imatge pixelada d'un monument
-- **📜 Mode Descripció**: Text cultural i històric
-- **🔊 Mode Àudio**: Sons de festes i tradicions
+- **🏛️ Mode Clàssic**: Taula comparativa estil Wordle amb 7 categories
+- **🛡️ Mode Escuts**: Endevina per l'escut heràldic (imatge pixelada progressiva)
+- **🎥 Mode Festivitats**: Vídeos de 5 segons de festes majors i tradicions
+- **🎭 Mode Personatges**: Cites famoses de figures catalanes
+- **🏗️ Mode Edificis**: Monuments i arquitectura emblemàtica
 
 ## 🎮 Com es juga?
 
-### Mode Clàssic (Principal)
-1. Escriu el nom d'un municipi català
-2. Revisa les pistes en 7 categories:
-   - **Nom del municipi**
-   - **Província** (Barcelona, Girona, Lleida, Tarragona)
-   - **Nombre d'habitants** (±1K exacte, ±2.5K aproximat)
-   - **Comarca**
-   - **Altitud** (±25m exacte, ±100m aproximat)
-   - **Edat històrica** (Romana, Medieval, Moderna, Contemporània)
-   - **Punts cardinals** (Nord, Sud, Est, Oest, Centre, etc.)
+### 🏛️ Mode Clàssic (Principal)
+Taula comparativa amb 7 categories del municipi:
+- **Nom del municipi**
+- **Província** (Barcelona, Girona, Lleida, Tarragona)
+- **Habitants** (±1K exacte, ±2.5K aproximat)
+- **Comarca**
+- **Altitud** (±25m exacte, ±100m aproximat)
+- **Edat històrica** (Romana, Medieval, Moderna, Contemporània)
+- **Punts cardinals** (Nord, Sud, Est, Oest, Costa, Interior, etc.)
 
-3. Usa el codi de colors per afinar:
-   - 🟢 **Verd**: Correcte
-   - 🟡 **Groc**: Aproximat (només per habitants i altitud)
-   - 🔴 **Vermell**: Incorrecte
+**Codi de colors:**
+- 🟢 **Verd**: Correcte
+- 🟡 **Groc**: Aproximat (només habitants i altitud)
+- 🔴 **Vermell**: Incorrecte
 
-4. Tens 6 intents per endevinar el municipi!
+### 🛡️ Mode Escuts
+1. Veus l'escut municipal molt pixelat
+2. Cada intent fallit millora la resolució
+3. Reps pistes del municipi progressivament:
+   - Intent 2: Província
+   - Intent 3: Rang de població
+   - Intent 4: Comarca
+   - Intent 5: Característica destacada
+
+### 🎥 Mode Festivitats
+1. Vídeo de 5 segons d'una festa o tradició local
+2. Pistes culturals per cada error:
+   - Intent 2: Ubicació (Costa/Interior/Muntanya)
+   - Intent 3: Tipus de festa (Religiosa/Cultural/Popular)
+   - Intent 4: Elements (Música/Pirotècnia/Balls/Construccions)
+   - Intent 5: Època de l'any
+   - Intent 6: Comarca o pista decisiva
+
+### 🎭 Mode Personatges
+1. Cita famosa d'un personatge català
+2. Pistes biogràfiques cada 3 intents:
+   - Intent 3: Època/Segle de vida
+   - Intent 4: Professió o camp d'activitat
+   - Intent 5: Lloc d'origen o residència
+   - Intent 6: Obra principal o llegat
+
+### 🏗️ Mode Edificis
+1. Imatge pixelada d'un monument o edifici emblemàtic
+2. Progressió visual similar als escuts
+3. Pistes arquitectòniques i històriques
 
 ## 🛠️ Stack Tecnològic
 
 ### Frontend
 - **React 18** amb hooks
 - **Vite** per build ràpid
-- **TailwindCSS** per styling
-- **React Router** per navegació
-- **Framer Motion** per animacions
+- **CSS3** per styling
+- Estructura modular amb sections
 
-### Backend
+### Backend (Planificat)
 - **Node.js** amb Express
 - **PostgreSQL** per base de dades
 - **APIs externes**: ICGC, Idescat, OpenStreetMap
 
-### Deploy
-- **Frontend**: Vercel/Netlify
-- **Backend**: Railway/Supabase
-- **Database**: PlanetScale/Supabase
-
 ## 🚀 Instal·lació i Desenvolupament
-
-### Prerequesits
-- Node.js 18+
-- npm o yarn
 
 ### Setup local
 ```bash
@@ -69,17 +87,8 @@ GeoCat és un joc educatiu que combina geografia, cultura i història catalana e
 git clone https://github.com/username/geocat.git
 cd geocat
 
-# Instal·lar dependencies del frontend
-cd frontend
+# Instal·lar dependencies
 npm install
-
-# Instal·lar dependencies del backend
-cd ../backend
-npm install
-
-# Configurar variables d'entorn
-cp .env.example .env
-# Editar .env amb les teves claus d'API
 
 # Executar en mode desenvolupament
 npm run dev
@@ -87,152 +96,182 @@ npm run dev
 
 ### Scripts disponibles
 ```bash
-# Frontend
 npm run dev          # Servidor de desenvolupament
 npm run build        # Build per producció
 npm run preview      # Preview del build
-
-# Backend
-npm run dev          # Servidor amb nodemon
-npm run start        # Servidor de producció
-npm run migrate      # Executar migracions BD
 ```
 
 ## 📁 Estructura del Projecte
 
 ```
 geocat/
-├── frontend/                 # React + Vite app
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── game/        # Components del joc
-│   │   │   │   ├── ClassicMode.jsx
-│   │   │   │   ├── GameBoard.jsx
-│   │   │   │   └── GuessRow.jsx
-│   │   │   ├── ui/          # Components UI generals
-│   │   │   │   ├── Header.jsx
-│   │   │   │   └── CountdownTimer.jsx
-│   │   ├── hooks/           # Custom hooks
-│   │   │   ├── useGameState.js
-│   │   │   └── useDailyMunicipality.js
-│   │   ├── services/        # API calls
-│   │   │   └── api.js
-│   │   ├── utils/           # Utilitats
-│   │   │   ├── gameLogic.js
-│   │   │   └── dateUtils.js
-│   │   └── App.jsx
-│   ├── public/
-│   └── package.json
-├── backend/                  # API i base de dades
-│   ├── src/
-│   │   ├── controllers/     # Controladors API
-│   │   ├── models/          # Models de dades
-│   │   ├── routes/          # Rutes API
-│   │   ├── services/        # Lògica de negoci
-│   │   └── utils/           # Scripts utilitats
-│   ├── database/
-│   │   ├── migrations/      # Migracions BD
-│   │   ├── seeds/           # Dades inicials
-│   │   └── scripts/         # Scripts població dades
-│   └── package.json
-├── docs/                     # Documentació
+├── src/
+│   ├── sections/           # Components de cada mini-joc
+│   │   ├── Classic.jsx     # Mode clàssic
+│   │   ├── Escuts.jsx      # Escuts heràldics
+│   │   ├── Festivitats.jsx # Festes majors
+│   │   ├── Personatges.jsx # Personatges catalans
+│   │   └── Edificis.jsx    # Edificis emblemàtics
+│   ├── App.jsx             # Component principal
+│   ├── App.css             # Estils globals
+│   └── main.jsx            # Entry point
+├── public/
+├── package.json
 └── README.md
 ```
 
-## 🗄️ Base de Dades
+## 🎯 Exemples de Contingut
 
-### Taula principal: `municipis`
+### 🛡️ Escuts Recognoscibles
+- **Barcelona**: Creu de Sant Jordi + barres catalanes
+- **Girona**: Lleó + torre + pont
+- **Sitges**: Tres clavells vermells
+- **Vic**: Claus de Sant Pere
+- **Berga**: Ós + muntanyes
+
+### 🎥 Festes Emblemàtiques
+- **Patum de Berga**: Gegants, foc, música (UNESCO)
+- **Castells de Valls**: Construccions humanes
+- **Correfocs**: Diables amb pirotècnia
+- **Havaneres**: Cantaires a la costa + rom cremat
+- **Sardanes**: Balls en cercle amb cobla
+
+### 🎭 Personatges i Cites
+- **Salvador Dalí**: *"La diferència entre un boig i jo és que jo no estic boig"*
+- **Antoni Gaudí**: *"L'originalitat consisteix en tornar a l'origen"*
+- **Jacint Verdaguer**: *"Canigó, Canigó, nostre Canigó!"*
+- **Josep Pla**: *"El millor que es pot fer amb les paraules és respectar-les"*
+
+### 🏗️ Edificis Icònics
+- **Sagrada Família** (Barcelona)
+- **Pont Vell** (Besalú)
+- **Monestir de Poblet**
+- **Casa Batlló** (Barcelona)
+- **Castell de Cardona**
+
+## 📅 Roadmap
+
+### ✅ Fase 1: Estructura Base (Actual)
+- [x] Setup React + Vite
+- [x] Components de cada mini-joc
+- [x] Estructura modular
+- [x] Console logs per debugging
+
+### 🚧 Fase 2: Lògica de Joc (En desenvolupament)
+- [ ] Sistema de comparació Mode Clàssic
+- [ ] Pixelació progressiva Escuts/Edificis
+- [ ] Player de vídeo Festivitats
+- [ ] Sistema de pistes Personatges
+- [ ] Validació d'inputs
+
+### 🔮 Fase 3: Dades i Backend
+- [ ] Base de dades amb 947 municipis
+- [ ] API endpoints
+- [ ] Sistema de rotació diària
+- [ ] Contingut multimèdia
+
+### 🎨 Fase 4: UI/UX
+- [ ] Disseny responsive
+- [ ] Animacions i transicions
+- [ ] PWA functionality
+- [ ] Sharing results
+
+## 🗄️ Estructura de Dades (Planificada)
+
+### Municipis Base
 ```sql
 CREATE TABLE municipis (
   id SERIAL PRIMARY KEY,
-  nom_oficial VARCHAR(100) NOT NULL,
-  nom_popular VARCHAR(100),
-  comarca VARCHAR(50) NOT NULL,
-  provincia VARCHAR(20) NOT NULL,
-  poblacio INTEGER NOT NULL,
+  nom_oficial VARCHAR(100),
+  comarca VARCHAR(50),
+  provincia VARCHAR(20),
+  poblacio INTEGER,
   altitud INTEGER,
-  superficie_km2 DECIMAL(8,2),
-  coordenades_lat DECIMAL(10,7),
-  coordenades_lng DECIMAL(10,7),
   edat_historica VARCHAR(20),
-  punts_cardinals VARCHAR(20),
-  data_festa_major DATE,
-  actiu BOOLEAN DEFAULT true,
-  data_creacio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  punts_cardinals VARCHAR(20)
 );
 ```
 
-### Fonts de dades
-- **ICGC**: Límits municipals i coordenades
-- **Idescat**: Població i estadístiques
-- **OpenStreetMap**: Dades geogràfiques complementàries
-- **Wikipedia**: Informació cultural i històrica
+### Contingut Multimèdia
+```sql
+CREATE TABLE contingut_multimedia (
+  municipi_id INTEGER,
+  tipus ENUM('escut', 'video', 'edifici'),
+  url VARCHAR(255),
+  descripcio TEXT
+);
 
-## 🎯 Roadmap
-
-### ✅ Fase 1: Fonaments (Completada)
-- [x] Setup del projecte React + Vite
-- [x] Base de dades amb municipis catalans
-- [x] Mode Clàssic funcional
-- [x] Sistema de rotació diària
-- [x] Deploy bàsic
-
-### 🚧 Fase 2: Contingut i Expansió (En desenvolupament)
-- [ ] Mode Silueta geogràfica
-- [ ] Mode Zoom amb monuments
-- [ ] Mode Descripció cultural
-- [ ] Admin panel per gestió de contingut
-- [ ] PWA i notificacions
-
-### 🔮 Fase 3: Premium i Gamificació (Planificat)
-- [ ] Mode Àudio amb tradicions
-- [ ] Sistema de puntuacions i estadístiques
-- [ ] Funcionalitats socials (compartir resultats)
-- [ ] Modes de dificultat personalitzables
-- [ ] Expansió a altres comunitats autònomes
+CREATE TABLE personatges (
+  municipi_vinculat INTEGER,
+  nom_complet VARCHAR(100),
+  cita_famosa TEXT,
+  epoca VARCHAR(50),
+  professio VARCHAR(100)
+);
+```
 
 ## 🤝 Contribució
 
-Les contribucions són benvingudes! Si vols ajudar a millorar GeoCat:
+Contribucions benvingudes! Especialment necessàries:
 
+### Contingut Cultural
+- **Descripcions** de festes locals
+- **Cites** de personatges catalans
+- **Fotos** d'escuts municipals
+- **Vídeos** de tradicions (Creative Commons)
+
+### Desenvolupament
 1. Fork el projecte
-2. Crea una branch (`git checkout -b feature/nova-funcionalitat`)
-3. Commit els canvis (`git commit -m 'Afegir nova funcionalitat'`)
-4. Push a la branch (`git push origin feature/nova-funcionalitat`)
-5. Obre un Pull Request
-
-### Contribucions especialment necessàries:
-- **Contingut cultural**: Descripcions, curiositats, tradicions locals
-- **Àudios**: Gravacions de festes majors, sardanes, pregons
-- **Imatges**: Fotos de monuments i paisatges catalans
-- **Traduccions**: Català, castellà, anglès
-
-## 📊 Estat del Projecte
-
-- **Municipis en BD**: 947 (tots els de Catalunya)
-- **Municipis amb contingut complet**: 50
-- **Mini-jocs desenvolupats**: 1/5
-- **Coverage de tests**: 0% (pendent)
-- **Performance Score**: 95/100
+2. Crea branch (`git checkout -b feature/nova-funcionalitat`)
+3. Commit (`git commit -m 'Afegir nova funcionalitat'`)
+4. Push (`git push origin feature/nova-funcionalitat`)
+5. Pull Request
 
 ## 👥 Equip
 
-- **[@janai-dev](https://github.com/janai-dev)** - Frontend, UX/UI, Game Logic
-- **[@aleix-dev](https://github.com/aleix-dev)** - Backend, Database, Data Scraping
+- **[@janai-dev](https://github.com/janai-dev)** - Frontend, Game Logic, UX/UI
+- **[@aleix-dev](https://github.com/aleix-dev)** - Backend, Database, Data Collection
+
+## 📊 Estat Actual del Projecte
+
+- **Components creats**: 5/5 mini-jocs
+- **Funcionalitat**: Estructura base + console logs
+- **Dades**: Hardcoded per testing
+- **UI**: Mínima, funcional
+- **Backend**: Pendent
+
+## 🎯 Exemples d'Ús
+
+### Mode Clàssic
+```
+Intent: "Girona"
+Resultat:
+🟢 Província: Girona
+🔴 Habitants: 101.852 (target: diferent)
+🟡 Altitud: 70m (target: ~120m)
+```
+
+### Mode Personatges
+```
+Cita: "L'originalitat consisteix en tornar a l'origen"
+Pistes:
+- Segle XIX-XX
+- Arquitecte modernista
+- Nascut a Reus
+```
 
 ## 📄 Llicència
 
-Aquest projecte està sota la llicència MIT. Veure [LICENSE](./LICENSE) per més detalls.
+MIT License. Veure [LICENSE](./LICENSE) per detalls.
 
 ## 🙏 Agraïments
 
-- **Institut Cartogràfic i Geològic de Catalunya (ICGC)** per les dades geogràfiques
-- **Institut d'Estadística de Catalunya (Idescat)** per les dades demogràfiques
-- **OpenStreetMap contributors** per les dades cartogràfiques
-- **Wordle** per la inspiració del format de joc
+- **Institut Cartogràfic i Geològic de Catalunya (ICGC)**
+- **Institut d'Estadística de Catalunya (Idescat)**
+- **Wordle** per la inspiració del format
 
 ---
 
 **GeoCat** - Descobreix Catalunya jugant 🗺️
 
-[Web](https://geocat.cat) • [Demo](https://geocat.vercel.app) • [Documentació](./docs/) • [Contribuir](./CONTRIBUTING.md)
+[Demo](https://geocat.vercel.app) • [Repositori](https://github.com/username/geocat)

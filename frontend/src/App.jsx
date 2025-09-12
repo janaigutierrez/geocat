@@ -1,21 +1,18 @@
-import { useState } from 'react'
 import './App.css'
 import Classic from './sections/Classic'
-
+import Escuts from './sections/Escuts'
+import Festivitats from './sections/Festivitats'
+import Personatges from './sections/Personatges'
+import Edificis from './sections/Edificis'
 
 function App() {
-
   return (
     <>
-      <Landing />
       <Classic />
       <Escuts />
       <Festivitats />
       <Personatges />
       <Edificis />
-
-
-
     </>
   )
 }
