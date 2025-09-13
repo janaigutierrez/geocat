@@ -2,7 +2,7 @@ const Button = ({ children, onClick }) => {
     return (
         <button
             onClick={onClick}
-            className='px-4 py-2  font-medium transition-colors'
+            className='px-8 py-2 text-center font-medium transition-colors w-fit mx-auto block'
         >
             {children}
         </button>
