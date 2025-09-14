@@ -1,4 +1,5 @@
 import Button from "../components/common/Button"
+import { useState } from "react"
 
 const Classic = ({ isActive, onToggle }) => {
 
