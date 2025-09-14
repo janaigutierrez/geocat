@@ -2,7 +2,7 @@ import { Users, Mountain, Calendar, Map, MapPin } from 'lucide-react'
 
 /* Aqui t'he posat d'exemple els emojis, els importo de la bilbioteca lucide-react i els pots afegir tal qual on vulguis del codi com aqui */
 /* Fixa't-hi com estan afegits i prova de ficar si vols algun més, si no en el Header en qualsevol altre component */
-/* Hauràs d'instalar la llibreria amb: npm install lucide-react' i ja podras ficar-los tal qual com aqui */
+/* Hauràs d'instalar la llibreria amb: 'npm install lucide-react' i ja podras ficar-los tal qual com aqui */
 
 const Header = () => {
     return (
@@ -10,7 +10,7 @@ const Header = () => {
             <div>
                 <h1 className="text-4xl font-bold text-blue-600 flex items-center">
                     <MapPin className="w-8 h-8 mr-2" />
-                    GeoCat ////
+                    GeoCat
                 </h1>
                 <h2 className="text-lg text-gray-600 mt-2">
                     El joc per conèixer Catalunya
