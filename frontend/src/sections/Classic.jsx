@@ -1,84 +1,110 @@
 import { useState, useEffect } from "react"
 import Button from "../components/common/Button"
-import { getMunicipiAleatori, getMunicipiPerNom } from "../data/municipis.js"
+import { getMunicipiAleatori, getMunicipiPerNom, buscarMunicipis } from "../data/municipis"
 
-const Classic = () => {
-    const [showGame, setShowGame] = useState(false)
-    const [currentGuess, setCurrentGuess] = useState("")
+const Classic = ({ isActive, onToggle }) => {
+    const [currentGuess, setCurrentGuess] = useState('')
     const [attempts, setAttempts] = useState([])
-    const [gameStatus, setGameStatus] = useState("playing")
+    const [gameStatus, setGameStatus] = useState('playing')
     const [municipiObjectiu, setMunicipiObjectiu] = useState(null)
+    const [suggestions, setSuggestions] = useState([])
 
     useEffect(() => {
-        if (showGame && !municipiObjectiu) {
+        if (isActive && !municipiObjectiu) {
             setMunicipiObjectiu(getMunicipiAleatori())
         }
-    }, [showGame, municipiObjectiu])
+    }, [isActive, municipiObjectiu])
+
+    useEffect(() => {
+        setSuggestions(buscarMunicipis(currentGuess))
+    }, [currentGuess])
 
     const handleGuess = () => {
         if (!currentGuess.trim()) return
 
         const guessData = getMunicipiPerNom(currentGuess)
         if (!guessData) {
-            alert("Aquest municipi no existeix!")
+            alert('Aquest municipi no existeix!')
             return
         }
 
         const comparison = {
-            nom: guessData.nom === municipiObjectiu.nom ? "correct" : "incorrect",
-            provincia: guessData.provincia === municipiObjectiu.provincia ? "correct" : "incorrect",
-            habitants: guessData.habitants === municipiObjectiu.habitants ? "correct" : "incorrect",
-            comarca: guessData.comarca === municipiObjectiu.comarca ? "correct" : "incorrect",
-            altitud: guessData.altitud === municipiObjectiu.altitud ? "correct" : "incorrect",
-            edatHistorica: guessData.edatHistorica === municipiObjectiu.edatHistorica ? "correct" : "incorrect",
-            puntsCardinals: guessData.puntsCardinals === municipiObjectiu.puntsCardinals ? "correct" : "incorrect"
+            nom: guessData.nom === municipiObjectiu.nom ? 'correct' : 'incorrect',
+            provincia: guessData.provincia === municipiObjectiu.provincia ? 'correct' : 'incorrect',
+            habitants: guessData.habitants === municipiObjectiu.habitants ? 'correct' : 'incorrect',
+            comarca: guessData.comarca === municipiObjectiu.comarca ? 'correct' : 'incorrect',
+            altitud: guessData.altitud === municipiObjectiu.altitud ? 'correct' : 'incorrect',
+            edatHistorica: guessData.edatHistorica === municipiObjectiu.edatHistorica ? 'correct' : 'incorrect',
+            puntsCardinals: guessData.puntsCardinals === municipiObjectiu.puntsCardinals ? 'correct' : 'incorrect',
         }
 
         setAttempts([...attempts, { ...guessData, comparison }])
-        setCurrentGuess("")
+        setCurrentGuess('')
+        setSuggestions([])
 
         if (guessData.nom === municipiObjectiu.nom) {
-            setGameStatus("won")
-        } else if (attempts.length >= 20) {
-            setGameStatus("lost")
+            setGameStatus('won')
+        } else if (attempts.length >= 5) {
+            setGameStatus('lost')
         }
-    }
-
-    const getCellColor = (status) => {
-        return status === "correct" ? "bg-green-500 text-white" : "bg-red-500 text-white"
     }
 
     const resetGame = () => {
         setAttempts([])
-        setCurrentGuess("")
-        setGameStatus("playing")
+        setCurrentGuess('')
+        setGameStatus('playing')
         setMunicipiObjectiu(getMunicipiAleatori())
+        setSuggestions([])
+    }
+
+    const getCellColor = (status) => {
+        return status === 'correct' ? 'bg-green-700 text-white' : 'bg-red-700 text-white'
     }
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <Button onClick={() => setShowGame(!showGame)}>
+            <Button onClick={onToggle}>
                 Mode Clàssic
             </Button>
 
-            {showGame && municipiObjectiu && (
-                <div className="bg-white rounded-lg shadow-lg p-6 mt-4">
+            {isActive && municipiObjectiu && (
+                <div className="bg-slate-800 text-white rounded-lg shadow-lg p-6 mt-4">
                     <h3 className="text-2xl font-bold text-center mb-4">
                         Endevina el municipi
                     </h3>
 
                     {gameStatus === "playing" && (
-                        <div className="flex gap-2 max-w-md mx-auto mb-6">
-                            <input
-                                type="text"
-                                value={currentGuess}
-                                onChange={(e) => setCurrentGuess(e.target.value)}
-                                placeholder="Escriu un municipi..."
-                                className="flex-1 px-4 py-2 border rounded-md"
-                            />
-                            <Button onClick={handleGuess}>
-                                Provar
-                            </Button>
+                        <div className="max-w-md mx-auto mb-6 relative">
+                            <div className="flex gap-2">
+                                <div className="flex-1 relative">
+                                    <input
+                                        type="text"
+                                        value={currentGuess}
+                                        onChange={(e) => setCurrentGuess(e.target.value)}
+                                        placeholder="Escriu un municipi..."
+                                        className="w-full px-4 py-2 border rounded-md text-white"
+                                    />
+                                    {suggestions.length > 0 && (
+                                        <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1">
+                                            {suggestions.map((municipi) => (
+                                                <div
+                                                    key={municipi.id}
+                                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                                                    onClick={() => {
+                                                        setCurrentGuess(municipi.nom)
+                                                        setSuggestions([])
+                                                    }}
+                                                >
+                                                    {municipi.nom}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <Button onClick={handleGuess}>
+                                    Provar
+                                </Button>
+                            </div>
                         </div>
                     )}
 
@@ -127,7 +153,7 @@ const Classic = () => {
 
                     {gameStatus === "won" && (
                         <div className="text-center">
-                            <div className="bg-green-500 p-4 rounded mb-4">
+                            <div className="bg-green-100 p-4 rounded mb-4">
                                 Has guanyat! Era {municipiObjectiu.nom}!
                             </div>
                             <Button onClick={resetGame}>Jugar de nou</Button>
@@ -136,13 +162,12 @@ const Classic = () => {
 
                     {gameStatus === "lost" && (
                         <div className="text-center">
-                            <div className="bg-red-500 p-4 rounded mb-4">
+                            <div className="bg-red-100 p-4 rounded mb-4">
                                 Has perdut! Era {municipiObjectiu.nom}
                             </div>
                             <Button onClick={resetGame}>Intentar de nou</Button>
                         </div>
                     )}
-
                 </div>
             )}
         </div>
