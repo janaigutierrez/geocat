@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Building2, Trophy, RotateCcw } from "lucide-react"
 import Button from "../components/common/Button"
 import { getMunicipiAleatori, getMunicipiPerNom, buscarMunicipis } from "../data/municipis"
 
@@ -8,6 +9,7 @@ const Classic = ({ isActive, onToggle }) => {
     const [gameStatus, setGameStatus] = useState('playing')
     const [municipiObjectiu, setMunicipiObjectiu] = useState(null)
     const [suggestions, setSuggestions] = useState([])
+    const [selectedIndex, setSelectedIndex] = useState(-1)
 
     useEffect(() => {
         if (isActive && !municipiObjectiu) {
@@ -16,13 +18,29 @@ const Classic = ({ isActive, onToggle }) => {
     }, [isActive, municipiObjectiu])
 
     useEffect(() => {
-        setSuggestions(buscarMunicipis(currentGuess))
+        // Cerca només a l'INICI de paraula
+        if (currentGuess.length >= 2) {
+            const filtered = buscarMunicipis(currentGuess).filter(municipi =>
+                municipi.nom.toLowerCase().startsWith(currentGuess.toLowerCase())
+            )
+            setSuggestions(filtered)
+        } else {
+            setSuggestions([])
+        }
+        setSelectedIndex(-1) // Reset selecció quan canvia el text
     }, [currentGuess])
 
     const handleGuess = () => {
-        if (!currentGuess.trim()) return
+        let municipiToGuess = currentGuess
 
-        const guessData = getMunicipiPerNom(currentGuess)
+        // Si hi ha una selecció activa, usar-la
+        if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+            municipiToGuess = suggestions[selectedIndex].nom
+        }
+
+        if (!municipiToGuess.trim()) return
+
+        const guessData = getMunicipiPerNom(municipiToGuess)
         if (!guessData) {
             alert('Aquest municipi no existeix!')
             return
@@ -31,9 +49,9 @@ const Classic = ({ isActive, onToggle }) => {
         const comparison = {
             nom: guessData.nom === municipiObjectiu.nom ? 'correct' : 'incorrect',
             provincia: guessData.provincia === municipiObjectiu.provincia ? 'correct' : 'incorrect',
-            habitants: guessData.habitants === municipiObjectiu.habitants ? 'correct' : 'incorrect',
+            habitants: getNumericComparison(guessData.habitants, municipiObjectiu.habitants),
             comarca: guessData.comarca === municipiObjectiu.comarca ? 'correct' : 'incorrect',
-            altitud: guessData.altitud === municipiObjectiu.altitud ? 'correct' : 'incorrect',
+            altitud: getNumericComparison(guessData.altitud, municipiObjectiu.altitud),
             edatHistorica: guessData.edatHistorica === municipiObjectiu.edatHistorica ? 'correct' : 'incorrect',
             puntsCardinals: guessData.puntsCardinals === municipiObjectiu.puntsCardinals ? 'correct' : 'incorrect',
         }
@@ -41,6 +59,7 @@ const Classic = ({ isActive, onToggle }) => {
         setAttempts([...attempts, { ...guessData, comparison }])
         setCurrentGuess('')
         setSuggestions([])
+        setSelectedIndex(-1)
 
         if (guessData.nom === municipiObjectiu.nom) {
             setGameStatus('won')
@@ -55,15 +74,46 @@ const Classic = ({ isActive, onToggle }) => {
         setGameStatus('playing')
         setMunicipiObjectiu(getMunicipiAleatori())
         setSuggestions([])
+        setSelectedIndex(-1)
+    }
+
+    const handleKeyDown = (e) => {
+        if (suggestions.length === 0) return
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            setSelectedIndex(prev =>
+                prev < suggestions.length - 1 ? prev + 1 : 0
+            )
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            setSelectedIndex(prev =>
+                prev > 0 ? prev - 1 : suggestions.length - 1
+            )
+        } else if (e.key === 'Enter') {
+            e.preventDefault()
+            handleGuess()
+        } else if (e.key === 'Escape') {
+            setSuggestions([])
+            setSelectedIndex(-1)
+        }
     }
 
     const getCellColor = (status) => {
-        return status === 'correct' ? 'bg-green-700 text-white' : 'bg-red-700 text-white'
+        return status === 'correct' ? 'bg-green-500' : 'bg-red-500'
+    }
+
+    const getNumericComparison = (guess, target) => {
+        if (guess === target) return { status: 'correct', arrow: '' }
+        return guess < target
+            ? { status: 'incorrect', arrow: '↑' }
+            : { status: 'incorrect', arrow: '↓' }
     }
 
     return (
         <div className="max-w-4xl mx-auto p-6">
             <Button onClick={onToggle}>
+                <Building2 className="w-4 h-4 inline mr-2" />
                 Mode Clàssic
             </Button>
 
@@ -81,18 +131,23 @@ const Classic = ({ isActive, onToggle }) => {
                                         type="text"
                                         value={currentGuess}
                                         onChange={(e) => setCurrentGuess(e.target.value)}
+                                        onKeyDown={handleKeyDown}
                                         placeholder="Escriu un municipi..."
                                         className="w-full px-4 py-2 border rounded-md text-white"
                                     />
                                     {suggestions.length > 0 && (
                                         <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1">
-                                            {suggestions.map((municipi) => (
+                                            {suggestions.map((municipi, index) => (
                                                 <div
                                                     key={municipi.id}
-                                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                                                    className={`px-4 py-2 cursor-pointer text-black border-b last:border-b-0 ${index === selectedIndex
+                                                        ? 'bg-blue-100'
+                                                        : 'hover:bg-gray-100'
+                                                        }`}
                                                     onClick={() => {
                                                         setCurrentGuess(municipi.nom)
                                                         setSuggestions([])
+                                                        setSelectedIndex(-1)
                                                     }}
                                                 >
                                                     {municipi.nom}
@@ -109,63 +164,88 @@ const Classic = ({ isActive, onToggle }) => {
                     )}
 
                     {attempts.length > 0 && (
-                        <table className="w-full text-sm mb-6 bg-white text-black rounded">
-                            <thead>
-                                <tr className="bg-gray-100">
-                                    <th className="p-2">Municipi</th>
-                                    <th className="p-2">Província</th>
-                                    <th className="p-2">Habitants</th>
-                                    <th className="p-2">Comarca</th>
-                                    <th className="p-2">Altitud</th>
-                                    <th className="p-2">Època</th>
-                                    <th className="p-2">Ubicació</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {attempts.map((attempt, index) => (
-                                    <tr key={index}>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.nom)}`}>
-                                            {attempt.nom}
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.provincia)}`}>
-                                            {attempt.provincia}
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.habitants)}`}>
-                                            {attempt.habitants}
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.comarca)}`}>
-                                            {attempt.comarca}
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.altitud)}`}>
-                                            {attempt.altitud}m
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.edatHistorica)}`}>
-                                            {attempt.edatHistorica}
-                                        </td>
-                                        <td className={`p-2 ${getCellColor(attempt.comparison.puntsCardinals)}`}>
-                                            {attempt.puntsCardinals}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className="space-y-4 mb-6">
+                            {/* Capçaleres */}
+                            <div className="grid grid-cols-7 gap-2 text-sm text-gray-300 text-center font-medium">
+                                <div>Municipi</div>
+                                <div>Província</div>
+                                <div>Habitants</div>
+                                <div>Comarca</div>
+                                <div>Altitud</div>
+                                <div>Època</div>
+                                <div>Ubicació</div>
+                            </div>
+
+                            {/* Intents */}
+                            {attempts.map((attempt, index) => (
+                                <div key={index} className="grid grid-cols-7 gap-2">
+                                    {/* Municipi */}
+                                    <div className={`${getCellColor(attempt.comparison.nom)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                        {attempt.nom}
+                                    </div>
+
+                                    {/* Província */}
+                                    <div className={`${getCellColor(attempt.comparison.provincia)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                        {attempt.provincia}
+                                    </div>
+
+                                    {/* Habitants amb fletxa */}
+                                    <div className={`${getCellColor(attempt.comparison.habitants.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
+                                        <div>{attempt.habitants.toLocaleString()}</div>
+                                        {attempt.comparison.habitants.arrow && (
+                                            <div className="text-lg">{attempt.comparison.habitants.arrow}</div>
+                                        )}
+                                    </div>
+
+                                    {/* Comarca */}
+                                    <div className={`${getCellColor(attempt.comparison.comarca)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                        {attempt.comarca}
+                                    </div>
+
+                                    {/* Altitud amb fletxa */}
+                                    <div className={`${getCellColor(attempt.comparison.altitud.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
+                                        <div>{attempt.altitud}m</div>
+                                        {attempt.comparison.altitud.arrow && (
+                                            <div className="text-lg">{attempt.comparison.altitud.arrow}</div>
+                                        )}
+                                    </div>
+
+                                    {/* Època */}
+                                    <div className={`${getCellColor(attempt.comparison.edatHistorica)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                        {attempt.edatHistorica}
+                                    </div>
+
+                                    {/* Ubicació */}
+                                    <div className={`${getCellColor(attempt.comparison.puntsCardinals)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                        {attempt.puntsCardinals}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     )}
 
                     {gameStatus === "won" && (
                         <div className="text-center">
-                            <div className="bg-green-100 p-4 rounded mb-4">
-                                Has guanyat! Era {municipiObjectiu.nom}!
+                            <div className="bg-green-100 p-4 rounded mb-4 flex items-center justify-center gap-2">
+                                <Trophy className="w-5 h-5 text-green-600" />
+                                <span className="text-green-800">Has guanyat! Era <strong>{municipiObjectiu.nom}</strong>!</span>
                             </div>
-                            <Button onClick={resetGame}>Jugar de nou</Button>
+                            <Button onClick={resetGame}>
+                                <RotateCcw className="w-4 h-4 inline mr-2" />
+                                Jugar de nou
+                            </Button>
                         </div>
                     )}
 
                     {gameStatus === "lost" && (
                         <div className="text-center">
-                            <div className="bg-red-100 p-4 rounded mb-4">
-                                Has perdut! Era {municipiObjectiu.nom}
+                            <div className="bg-red-100 p-4 rounded mb-4 text-red-800">
+                                Has perdut! Era <strong>{municipiObjectiu.nom}</strong>
                             </div>
-                            <Button onClick={resetGame}>Intentar de nou</Button>
+                            <Button onClick={resetGame}>
+                                <RotateCcw className="w-4 h-4 inline mr-2" />
+                                Intentar de nou
+                            </Button>
                         </div>
                     )}
                 </div>
