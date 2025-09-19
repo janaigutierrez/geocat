@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import { Building2, Trophy, RotateCcw } from "lucide-react"
+import { Building2, Trophy, RotateCcw, ArrowLeft } from "lucide-react"
 import Button from "../components/common/Button"
 import { getMunicipiAleatori, getMunicipiPerNom, buscarMunicipis } from "../data/municipis"
 
-const Classic = ({ isActive, onToggle }) => {
+const Classic = ({ isActive, onToggle, showBackButton }) => {
     const [currentGuess, setCurrentGuess] = useState('')
     const [attempts, setAttempts] = useState([])
     const [gameStatus, setGameStatus] = useState('playing')
@@ -18,7 +18,6 @@ const Classic = ({ isActive, onToggle }) => {
     }, [isActive, municipiObjectiu])
 
     useEffect(() => {
-        // Cerca només a l'INICI de paraula
         if (currentGuess.length >= 2) {
             const filtered = buscarMunicipis(currentGuess).filter(municipi =>
                 municipi.nom.toLowerCase().startsWith(currentGuess.toLowerCase())
@@ -33,7 +32,6 @@ const Classic = ({ isActive, onToggle }) => {
     const handleGuess = () => {
         let municipiToGuess = currentGuess
 
-        // Si hi ha una selecció activa, usar-la
         if (selectedIndex >= 0 && suggestions[selectedIndex]) {
             municipiToGuess = suggestions[selectedIndex].nom
         }
@@ -113,8 +111,17 @@ const Classic = ({ isActive, onToggle }) => {
     return (
         <div className="max-w-4xl mx-auto p-6">
             <Button onClick={onToggle}>
-                <Building2 className="w-4 h-4 inline mr-2" />
-                Mode Clàssic
+                {showBackButton ? (
+                    <>
+                        <ArrowLeft className="w-4 h-4 inline mr-2" />
+                        Tornar enrere
+                    </>
+                ) : (
+                    <>
+                        <Building2 className="w-4 h-4 inline mr-2" />
+                        Mode Clàssic
+                    </>
+                )}
             </Button>
 
             {isActive && municipiObjectiu && (

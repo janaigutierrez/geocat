@@ -40,7 +40,6 @@ h1 {
     line-height: 1.1;
 }
 
-/* Sobreescrivim els estils de button per defecte quan usem Tailwind */
 button:not(.btn-default) {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -75,4 +74,52 @@ button:not(.btn-default):focus-visible {
     button:not(.btn-default) {
         background-color: #f9f9f9;
     }
+}
+
+
+/* Animació per files noves */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+/* Millores per l'input */
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(59 130 246);
+    border-color: rgb(59 130 246);
+}
+
+/* Estils per suggerències */
+.suggestions-dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) transparent;
+}
+
+.suggestions-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+    background-color: rgb(156 163 175);
+    border-radius: 3px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(107 114 128);
 }
