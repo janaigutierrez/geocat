@@ -26,7 +26,7 @@ const Classic = ({ isActive, onToggle, showBackButton }) => {
         } else {
             setSuggestions([])
         }
-        setSelectedIndex(-1) // Reset selecció quan canvia el text
+        setSelectedIndex(-1)
     }, [currentGuess])
 
     const handleGuess = () => {
@@ -171,63 +171,50 @@ const Classic = ({ isActive, onToggle, showBackButton }) => {
                     )}
 
                     {attempts.length > 0 && (
-                        <div className="space-y-4 mb-6">
-                            {/* Capçaleres */}
-                            <div className="grid grid-cols-7 gap-2 text-sm text-gray-300 text-center font-medium">
-                                <div>Municipi</div>
-                                <div>Província</div>
-                                <div>Habitants</div>
-                                <div>Comarca</div>
-                                <div>Altitud</div>
-                                <div>Època</div>
-                                <div>Ubicació</div>
-                            </div>
-
-                            {/* Intents */}
-                            {attempts.map((attempt, index) => (
-                                <div key={index} className="grid grid-cols-7 gap-2">
-                                    {/* Municipi */}
-                                    <div className={`${getCellColor(attempt.comparison.nom)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
-                                        {attempt.nom}
-                                    </div>
-
-                                    {/* Província */}
-                                    <div className={`${getCellColor(attempt.comparison.provincia)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
-                                        {attempt.provincia}
-                                    </div>
-
-                                    {/* Habitants amb fletxa */}
-                                    <div className={`${getCellColor(attempt.comparison.habitants.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
-                                        <div>{attempt.habitants.toLocaleString()}</div>
-                                        {attempt.comparison.habitants.arrow && (
-                                            <div className="text-lg">{attempt.comparison.habitants.arrow}</div>
-                                        )}
-                                    </div>
-
-                                    {/* Comarca */}
-                                    <div className={`${getCellColor(attempt.comparison.comarca)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
-                                        {attempt.comarca}
-                                    </div>
-
-                                    {/* Altitud amb fletxa */}
-                                    <div className={`${getCellColor(attempt.comparison.altitud.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
-                                        <div>{attempt.altitud}m</div>
-                                        {attempt.comparison.altitud.arrow && (
-                                            <div className="text-lg">{attempt.comparison.altitud.arrow}</div>
-                                        )}
-                                    </div>
-
-                                    {/* Època */}
-                                    <div className={`${getCellColor(attempt.comparison.edatHistorica)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
-                                        {attempt.edatHistorica}
-                                    </div>
-
-                                    {/* Ubicació */}
-                                    <div className={`${getCellColor(attempt.comparison.puntsCardinals)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
-                                        {attempt.puntsCardinals}
-                                    </div>
+                        <div className="overflow-x-auto mb-6">
+                            <div className="min-w-[800px]">
+                                <div className="grid grid-cols-7 gap-2 text-sm text-gray-300 text-center font-medium mb-4">
+                                    <div>Municipi</div>
+                                    <div>Província</div>
+                                    <div>Habitants</div>
+                                    <div>Comarca</div>
+                                    <div>Altitud</div>
+                                    <div>Època</div>
+                                    <div>Ubicació</div>
                                 </div>
-                            ))}
+
+                                {attempts.map((attempt, index) => (
+                                    <div key={index} className="grid grid-cols-7 gap-2 mb-2">
+                                        <div className={`${getCellColor(attempt.comparison.nom)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                            {attempt.nom}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.provincia)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                            {attempt.provincia}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.habitants.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
+                                            <div>{attempt.habitants.toLocaleString()}</div>
+                                            {attempt.comparison.habitants.arrow && (
+                                                <div className="text-lg">{attempt.comparison.habitants.arrow}</div>
+                                            )}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.comarca)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                            {attempt.comarca}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.altitud.status)} text-white p-3 rounded-lg text-center font-bold text-sm relative`}>
+                                            <div>{attempt.altitud}m</div>
+                                            {attempt.comparison.altitud.arrow && (
+                                                <div className="text-lg">{attempt.comparison.altitud.arrow}</div>
+                                            )}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.edatHistorica)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                            {attempt.edatHistorica}
+                                        </div>
+                                        <div className={`${getCellColor(attempt.comparison.puntsCardinals)} text-white p-3 rounded-lg text-center font-bold text-sm`}>
+                                            {attempt.puntsCardinals}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
