@@ -198,7 +198,188 @@ export const municipis = [
         altitud: 12,
         edatHistorica: "Romana",
         puntsCardinals: "Interior"
+    },
+    {
+        id: 21,
+        nom: "Olot",
+        provincia: "Girona",
+        habitants: 44311,
+        comarca: "Garrotxa",
+        altitud: 443,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 22,
+        nom: "Ripoll",
+        provincia: "Girona",
+        habitants: 10300,
+        comarca: "Ripollès",
+        altitud: 691,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 23,
+        nom: "Granollers",
+        provincia: "Barcelona",
+        habitants: 63000,
+        comarca: "Vallès Oriental",
+        altitud: 152,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 24,
+        nom: "Igualada",
+        provincia: "Barcelona",
+        habitants: 42000,
+        comarca: "Anoia",
+        altitud: 313,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 25,
+        nom: "Balaguer",
+        provincia: "Lleida",
+        habitants: 17000,
+        comarca: "Noguera",
+        altitud: 233,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 26,
+        nom: "Puigcerdà",
+        provincia: "Girona",
+        habitants: 9100,
+        comarca: "Cerdanya",
+        altitud: 1200,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 27,
+        nom: "Amposta",
+        provincia: "Tarragona",
+        habitants: 21000,
+        comarca: "Montsià",
+        altitud: 8,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 28,
+        nom: "Vielha",
+        provincia: "Lleida",
+        habitants: 5400,
+        comarca: "Val d'Aran",
+        altitud: 974,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 29,
+        nom: "Cornellà de Llobregat",
+        provincia: "Barcelona",
+        habitants: 90000,
+        comarca: "Baix Llobregat",
+        altitud: 8,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 30,
+        nom: "Sant Cugat del Vallès",
+        provincia: "Barcelona",
+        habitants: 94000,
+        comarca: "Vallès Occidental",
+        altitud: 121,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 31,
+        nom: "Cerdanyola del Vallès",
+        provincia: "Barcelona",
+        habitants: 57000,
+        comarca: "Vallès Occidental",
+        altitud: 83,
+        edatHistorica: "Moderna",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 32,
+        nom: "Caldes de Montbui",
+        provincia: "Barcelona",
+        habitants: 18000,
+        comarca: "Vallès Oriental",
+        altitud: 203,
+        edatHistorica: "Romana",
+        puntsCardinals: "Interior"
+    },
+    {
+        id: 33,
+        nom: "Vilanova i la Geltrú",
+        provincia: "Barcelona",
+        habitants: 67000,
+        comarca: "Garraf",
+        altitud: 22,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 34,
+        nom: "Lloret de Mar",
+        provincia: "Girona",
+        habitants: 38000,
+        comarca: "Selva",
+        altitud: 5,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 35,
+        nom: "Roses",
+        provincia: "Girona",
+        habitants: 20000,
+        comarca: "Alt Empordà",
+        altitud: 5,
+        edatHistorica: "Romana",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 36,
+        nom: "Salou",
+        provincia: "Tarragona",
+        habitants: 29000,
+        comarca: "Tarragonès",
+        altitud: 5,
+        edatHistorica: "Moderna",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 37,
+        nom: "Calella",
+        provincia: "Barcelona",
+        habitants: 19000,
+        comarca: "Maresme",
+        altitud: 12,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Costa"
+    },
+    {
+        id: 38,
+        nom: "Camprodon",
+        provincia: "Girona",
+        habitants: 2300,
+        comarca: "Ripollès",
+        altitud: 950,
+        edatHistorica: "Medieval",
+        puntsCardinals: "Interior"
     }
+
 ]
 
 /* Funció per obtenir un municipi aleatori */
