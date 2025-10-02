@@ -140,7 +140,7 @@ const Classic = ({ isActive, onToggle, showBackButton }) => {
                                         onChange={(e) => setCurrentGuess(e.target.value)}
                                         onKeyDown={handleKeyDown}
                                         placeholder="Escriu un municipi..."
-                                        className="w-full px-4 py-2 border rounded-md text-white"
+                                        className="w-full px-4 py-2 border rounded-md !text-black !bg-white"
                                     />
                                     {suggestions.length > 0 && (
                                         <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1">
